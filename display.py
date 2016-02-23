@@ -1,41 +1,40 @@
 #!/usr/bin/env python
 __author__ = 'derek-williams00'
-"""This is a game all about collecting resources to advance while avoiding enemies and thieves"""
+"""This module handles displaying to the screen"""
 
 #importing tools
 import pygame
 
 #importing other game modules
-import tilemap
 
 
 class DisplayWindow:
     displaySize = (800,600)
-    gameDisplay = pygame.display.set_mode(displaySize)
-    active_tilemap = tilemap.Overworld
-    pygame.display.set_caption("Colligo")
-    pygame.display.update()
 
+    def __init__(self):
+        self.gameDisplay = pygame.display.set_mode(self.displaySize)
+        pygame.display.set_caption("Colligo")
 
-class Display:
-    displayTypes = {}
-
-
-class DisplayTileMap(Display):
-    def __init__(self, map=DisplayWindow.active_tilemap):
-        DisplayWindow.gameDisplay.fill((255,0,0))
+    def update(self):
         pygame.display.update()
 
-    def update(self, tell=False):
-        for block in DisplayWindow.active_tilemap.map:
-            DisplayWindow.gameDisplay.blit(DisplayWindow.active_tilemap.map[block].sprite,(block[0]*16+(DisplayWindow.displaySize[0]/2),block[1]*16+(DisplayWindow.displaySize[1]/2)))
-            pygame.display.update()
-            if tell:
-                print(DisplayWindow.active_tilemap.map[block].sprite,(block[0]*16+(DisplayWindow.displaySize[0]/2),block[1]*16+(DisplayWindow.displaySize[1]/2)))
+
+class DisplayTilemap():
+    def __init__(self, window, map):
+        window.gameDisplay.fill(map.canvasColor)
+        window.update()
+        self.window = window
+
+    def update(self, tilemap):
+        self.window.gameDisplay.fill(tilemap.canvasColor)
+        for block in tilemap.map:
+            print(tilemap.map)
+            self.window.gameDisplay.blit(tilemap.map[block].sprite,(block[0]*16+(self.window.displaySize[0]/2),block[1]*16+(self.window.displaySize[1]/2)))
+        self.window.update()
 
 
-
-class Menu(Display):
+"""
+class Menu():
     displayAboveLevel = False
 
 
@@ -53,3 +52,4 @@ class PauseMenu(Menu):
 
 class DeathMenu(Menu):
     pass
+"""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 __author__ = 'derek-williams00'
-"""This is a game all about collecting resources to advance while avoiding enemies and thieves"""
+"""This module handles map data"""
 
 #importing tools
 import pygame
@@ -9,14 +9,34 @@ import pygame
 import gameObjs
 
 
-class TileMap:
-    gameObjInstances = [gameObjs.Colligo]
+class Tilemap:
+    gameObjInstances = [gameObjs.Colligo()]
+    map = {(0,0):gameObjInstances[0]}
+    canvasColor = (255,255,255)
+    activeMap = ''
 
+    def update(self):
+        ##new_map = self.map.keys()
+        for block in self.map:
+            new_map[tuple(new_map[block].position)] = new_map[block]
+        #self.map = new_map
 
-class Overworld(TileMap):
-    map = {(0,0):TileMap.gameObjInstances[0]}
-    canvasColor = (111,227,0)
+    def load_overworld(self):
+        ##Clearing Out Current Level
+        self.map.clear()
+        self.gameObjInstances.clear()
+        ##Defining New Level
+        self.activeMap = 'overworld'
+        self.gameObjInstances = [gameObjs.Colligo]
+        self.map = {(0,0):self.gameObjInstances[0]}
+        self.canvasColor = (111,227,0)
 
-class House(TileMap):
-    map = {(0,0):TileMap.gameObjInstances[0]}
-    canvasColor = (139,89,19)
+    def load_house(self):
+        ##Clearing Out Current Level
+        self.map.clear()
+        self.gameObjInstances.clear()
+        ##Defining New Level
+        self.activeMap = 'house'
+        self.gameObjInstances = [gameObjs.Colligo]
+        self.map = {(0,0):self.gameObjInstances[0]}
+        self.canvasColor = (139,89,19)

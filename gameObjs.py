@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 __author__ = 'derek-williams00'
-"""This is a game all about collecting resources to advance while avoiding enemies and thieves"""
+"""This module handles all the different tile blocks and entities in the game"""
 
 #importing tools
 import pygame
@@ -27,6 +27,7 @@ class InanimateObj(GameObj):
 
 class Colligo(Character):
     pass
+    #position = [-16,4]
 
 
 class Tree(InanimateObj):

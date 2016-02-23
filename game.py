@@ -8,13 +8,19 @@ import pygame
 #importing other game modules
 import tilemap
 import display
-import mech
 
 
-class main:
+class Main:
     def __init__(self):
-        self.game_window = display.DisplayWindow()
-        self.game_tilemap = display.DisplayTileMap()
+        #Game control classes
+        self.game_map = tilemap.Tilemap()
+        tilemap.Tilemap.load_overworld(self.game_map)
+        self.display_window = display.DisplayWindow()
+        self.display_map = display.DisplayTilemap(self.display_window,self.game_map)
+        ##Loading Colligo for user manipulation
+        self.main_char = self.game_map.gameObjInstances[0]
+
+
 
 
     def game_exit(self):
@@ -23,31 +29,38 @@ class main:
 
 
     def game_update(self):
-        main_char = tilemap.TileMap.gameObjInstances[0]
         #Getting user input
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 print(event)
                 self.game_exit()
             if event.type == pygame.KEYDOWN:
-                print(event)
+                #print(event)
                 if event.key == pygame.K_UP:
                     #mech.Mechanic.move_rel(main_char, (0,-main_char.moveSpeed))
-                    main_char.position[1] -= 1
+                    self.main_char.position[1] -= 1
+                    print('kevent up')
+                    print(self.main_char.position[1])
                 if event.key == pygame.K_DOWN:
                     #mech.Mechanic.move_rel(main_char, (0,main_char.moveSpeed))
-                    main_char.position[1] += 1
+                    self.main_char.position[1] += 1
+                    print('kevent down')
                 if event.key == pygame.K_RIGHT:
-                    main_char.position[0] += 1
+                    self.main_char.position[0] += 1
+                    print('kevent right')
                     #mech.Mechanic.move_rel(main_char, (main_char.moveSpeed,0))
                 if event.key == pygame.K_LEFT:
-                    main_char.position[0] -= 1
+                    self.main_char.position[0] -= 1
+                    print('kevent left')
                     #mech.Mechanic.move_rel(main_char, (-main_char.moveSpeed,0))
 
-        display.DisplayTileMap.update(self.game_tilemap)
+        #for the time being
+        self.game_map.update()
+        self.display_map.update(self.game_map)
+
 
 
 ##Runing game
-game = main()
+game = Main()
 while True:
-    main.game_update(game)
+    Main.game_update(game)
