@@ -28,8 +28,8 @@ class DisplayTilemap():
     def update(self, tilemap):
         self.window.gameDisplay.fill(tilemap.canvasColor)
         for block in tilemap.map:
-            print(tilemap.map)
-            self.window.gameDisplay.blit(tilemap.map[block].sprite,(block[0]*16+(self.window.displaySize[0]/2),block[1]*16+(self.window.displaySize[1]/2)))
+            #print(tilemap.map)
+            self.window.gameDisplay.blit(block.sprite,(tilemap.map[block][0]*16+(self.window.displaySize[0]/2),tilemap.map[block][1]*16+(self.window.displaySize[1]/2)))
         self.window.update()
 
 

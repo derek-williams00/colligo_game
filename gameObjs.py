@@ -15,7 +15,7 @@ class GameObj:
 
 class Character(GameObj):
     sprite = pygame.image.load('character.png')
-    moveSpeed = 1
+    moveSpeed = 4
     health = 100
     strength = 25
     hostile = False

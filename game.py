@@ -19,6 +19,7 @@ class Main:
         self.display_map = display.DisplayTilemap(self.display_window,self.game_map)
         ##Loading Colligo for user manipulation
         self.main_char = self.game_map.gameObjInstances[0]
+        self.char_moving = [False,False,False,False] #Up Down Left Right
 
 
 
@@ -35,32 +36,62 @@ class Main:
                 print(event)
                 self.game_exit()
             if event.type == pygame.KEYDOWN:
-                #print(event)
                 if event.key == pygame.K_UP:
-                    #mech.Mechanic.move_rel(main_char, (0,-main_char.moveSpeed))
-                    self.main_char.position[1] -= 1
+                    self.char_moving[0] = True
                     print('kevent up')
-                    print(self.main_char.position[1])
                 if event.key == pygame.K_DOWN:
-                    #mech.Mechanic.move_rel(main_char, (0,main_char.moveSpeed))
-                    self.main_char.position[1] += 1
+                    self.char_moving[1] = True
                     print('kevent down')
                 if event.key == pygame.K_RIGHT:
-                    self.main_char.position[0] += 1
+                    self.char_moving[2] = True
                     print('kevent right')
-                    #mech.Mechanic.move_rel(main_char, (main_char.moveSpeed,0))
                 if event.key == pygame.K_LEFT:
-                    self.main_char.position[0] -= 1
+                    self.char_moving[3] = True
                     print('kevent left')
-                    #mech.Mechanic.move_rel(main_char, (-main_char.moveSpeed,0))
+
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP:
+                    self.char_moving[0] = False
+                    print('kevent up')
+                    print(self.main_char.position)
+                if event.key == pygame.K_DOWN:
+                    self.char_moving[1] = False
+                    print('kevent down')
+                    print(self.main_char.position)
+                if event.key == pygame.K_RIGHT:
+                    self.char_moving[2] = False
+                    print('kevent right')
+                    print(self.main_char.position)
+                if event.key == pygame.K_LEFT:
+                    self.char_moving[3] = False
+                    print('kevent left')
+                    print(self.main_char.position)
+
+
+        if self.char_moving[0]:
+            #mech.Mechanic.move_rel(main_char, (0,-main_char.moveSpeed))
+            self.main_char.position[1] -= self.main_char.moveSpeed/32
+        if self.char_moving[1]:
+            #mech.Mechanic.move_rel(main_char, (0,main_char.moveSpeed))
+            self.main_char.position[1] += self.main_char.moveSpeed/32
+        if self.char_moving[2]:
+            self.main_char.position[0] += self.main_char.moveSpeed/32
+            #mech.Mechanic.move_rel(main_char, (main_char.moveSpeed,0))
+        if self.char_moving[3]:
+            self.main_char.position[0] -= self.main_char.moveSpeed/32
+
+            #mech.Mechanic.move_rel(main_char, (-main_char.moveSpeed,0))
 
         #for the time being
-        self.game_map.update()
+        self.game_map.update_pos()
         self.display_map.update(self.game_map)
 
 
 
 ##Runing game
 game = Main()
+clock = pygame.time.Clock()
 while True:
     Main.game_update(game)
+    clock.tick(32)
